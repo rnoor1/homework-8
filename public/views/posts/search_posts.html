@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Posts</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <input id="search-text" type="text" placeholder="Search for a post">
+    <button id="search-button">Search</button>
+    <div id="posts-container"></div>
+    <script>
+        $(document).ready(function () {
+            $('#search-button').click(function () {
+                $.ajax({
+                    url: `http://localhost:8888/api/posts?title=${$('#search-text').val()}`,
+                    type: "GET",
+                    success: function (data) {
+                        $('#posts-container').html('');
+                        $.each(data, function (key, post) {
+                            $('#posts-container').append(`<p>${post.title}: ${post.content}</p>`);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
